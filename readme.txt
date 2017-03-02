@@ -1,6 +1,7 @@
 Infinite Seas
 
-This is an exploration/educational game where you explore the ocean and interact with various marine life.
+An exploration/educational game where you explore the ocean and interact with various marine life.
+Term project for CS 15-122 at CMU.
 
 Dependencies:
 Python 3
