@@ -1,0 +1,23 @@
+Project Proposal:
+
+This is a 2D game where you are a marine biologist, and you swim around in a stage full of fish,
+feed them and study them.
+
+I will be using pygame, and a bit of numpy.
+
+Most of the visuals will be drawn with sprites.
+The stage will be procedurally generated, with geographical features like islands and tunnels. Player collision 
+with the stage will be precise using pygame's
+mask functionality.
+
+The fish in the stage will have sophisticated behaviour like swimming in schools, scattering in response to the player,
+finding food, and navigating around stage obstacles. Their locations are randomly selected.
+
+Physics like water resistance and waves will be simulated. You'll see seaweed that waves around in the water according
+to water currents.
+
+I will use particle physics for some visual elements such as bubbles. At this point I don't know if I will use an
+existing library or write my own particle class
+
+After all this is done I want to do some manipulation of the sprites, so they turn in 3D space, or wiggle. I think
+this will require matrix math using numpy.

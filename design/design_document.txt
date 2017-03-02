@@ -1,0 +1,57 @@
+The largest features in this project was movement, fish AI and behaviour, and terrain generation. Below this I will
+discuss my general approach to them.
+
+Player movement - Since the player controlled character is underwater, it's free to move in all directions, so I chose
+mouse controlled movement so the user can control the angle of movement more precisely than with arrow keys. I wanted
+the movement to feel smooth and natural, and instant acceleration is simple but jarring, so I added an acceleration
+factor and an extra velocity variable. The user directly controls target velocity with the mouse, but the actual
+velocity gradually ramps up/down until it catches up to the target velocity
+
+Fish behaviour - The basics of fish movement is this: pick a target position, check if the path to the target is
+unobstructed, then move towards the target. Since fish only need to check for collisions with the 
+terrain which doesn't ever move, they only check collisions every time they choose a target, instead of every frame,
+which greatly reduces the strain of calculation for multiple fish.
+
+Fish also have smooth acceleration like the player, which is inherited from a base MovingSprite class.
+
+The way it chooses a target position is dependent on its internal mode variable. The modes and the target-choosing
+behaviour associated are:
+- Wander: The default mode for solitary fish and one "leader" fish in a school.
+The fish chooses a somewhat random target nearby to swim to. The angle they can choose from is limited, so that 
+they tend to move horizontally rather than vertically. They're also biased towards continuing in the same direction
+that they're facing, so that they don't continue to turn around in one small spot.
+- Follow: The default mode for schooling fish. They target a random location near their leader. If left alone, the
+school stays together in a cohesive group.
+- Fleeing: The fish's speed suddenly increases, and it chooses a direction that's nearly opposite from the threat's
+location.
+- Feeding: The fish's speed increases a little, and it chooses to swim directly towards the food.
+
+The fish's mode updates in accordance to the environment. If the player is nearby and over a certain velocity, the
+fish goes into fleeing mode. If there is food nearby, the fish go into feeding mode, otherwise they default into
+wander or follow mode. Some modes take priority over others, for example, fleeing > feeding > wandering.
+
+Terrain generation - The randomized terrain is generated with a midpoint displacement algorithm, which takes a line
+segment, finds the middle point, and raises/lowers it by a random amount. The process then repeats on each of the
+two new line segments created, until enough iterations pass that what used to be a straight line looks like the 
+outline of a coral reef. The caves are then placed on top: they're randomly placed, then points are chosen at equal
+intervals in an oval shape and randomly displaced in/outwards to give the caves a jagged edge. Finally, tunnels are
+created that connect the caves together.
+
+
+UI:
+
+Controlling the player movement is one of the most important parts of the interface. I wanted the player to be able
+to move freely in any direction and be able to navigate delicately around obstacles. My control scheme was chiefly
+influenced by the iOS game Hungry Shark, which had pretty easy to understand controls: the shark stays center of the screen,
+and the player holds down on a spot on the screen to move in that direction, the player can also drag closer or further
+away from the center to control the movement speed. So I incorporated most of that into my own design, but since mine is
+controlled by a mouse, I could additionally take advantage of features a touchscreen doesn't have: two mouse buttons. This
+way, the left mouse click is solely reserved for navigation, and the right mouse click is for in game actions.
+
+Secondly, this game contains a bunch of facts, as it's meant to be an educational game, I want the user to be interested
+in reading these facts, because if nobody reads them it defeats the purpose, so another important purpose of my UI was
+to show off these facts in a clear way. Originally I only had the encyclopedia menu where all the facts are stored in one place
+and you can read them at your own leisure, but then I thought that players had to exit out of the game to check the encyclopedia
+during which their attention span could have ended, so I added an in-game pop up where you can immediately read the new
+facts as soon as you've interacted with the fish, so that players can read the facts as they play with the interactive part.
+

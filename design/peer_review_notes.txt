@@ -1,0 +1,10 @@
+TP peer review notes:
+
+Suggestions:
+- top of the water has waves
+- currents and physics in the water push things around
+- make the stage not solid black and look more natural.
+- more variety in the terrain generation
+- actual infinite procedural terrain generation
+- different fish have different speeds and different behaviour,
+just so they are differentiated more.
